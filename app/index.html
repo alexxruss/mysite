@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DevOps Portfolio</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0f172a;
+      color: #e2e8f0;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    h1, h2 {
+      color: #38bdf8;
+    }
+
+    .card {
+      background: #1e293b;
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    .skills {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 10px;
+    }
+
+    .skill {
+      background: #334155;
+      padding: 10px;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .contacts a {
+      color: #38bdf8;
+      text-decoration: none;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      opacity: 0.6;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <h1>Александр Русанов - DevOps Engineer (Junior)</h1>
+
+    <div class="card">
+      <h2>Обо мне</h2>
+      <p>
+        Начинающий DevOps-инженер. Основной фокус - Linux, автоматизация и работа с инфраструктурой.
+        Предпочитаю практический подход: пишу скрипты, настраиваю окружение, разбираюсь в реальных задачах.
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>Контакты:</h2>
+      <div class="contacts">
+        <a href="https://t.me/a_v_rusanov" target="_blank">Telegram: @a_v_rusanov</a>
+        <a href="mailto:avrtrump@gmail.com">Email: avrtrump@gmail.com</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Навыки</h2>
+      <div class="skills">
+        <div class="skill">Linux (CLI, процессы, права)</div>
+        <div class="skill">Bash scripting</div>
+        <div class="skill">Git</div>
+        <div class="skill">Docker (базовый уровень)</div>
+        <div class="skill">Ansible (начальный уровень)</div>
+        <div class="skill">Сети (основы)</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Проекты</h2>
+      <ul>
+        <li>
+          <b>Автоматизация серверов (Ansible)</b><br>
+          Настройка пользователей, SSH, базовых сервисов через playbook
+        </li>
+        <li>
+          <b>Bash-скрипты</b><br>
+          Анализ логов, поиск ошибок, автоматизация рутинных задач
+        </li>
+        <li>
+          <b>Docker</b><br>
+          Запуск контейнеров, работа с образами, базовая настройка
+        </li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Текущие цели</h2>
+      <ul>
+        <li>Kubernetes (развертывание и базовое администрирование)</li>
+        <li>CI/CD (GitLab CI / GitHub Actions)</li>
+        <li>Terraform (Infrastructure as Code)</li>
+      </ul>
+    </div>
+
+    <footer>
+      <p>© 2026 avrusanov</p>
+    </footer>
+
+  </div>
+
+</body>
+</html>
