@@ -1,0 +1,44 @@
+---
+- name: Install nginx
+  apt:
+    name:    nginx
+    state:   present
+
+- name: Start nginx
+  systemd:
+    name:    nginx
+    state:   started
+    enabled: true
+
+- name: Copy nginx config
+  copy:
+    src:      mysite.conf
+    dest:     /etc/nginx/sites-available/mysite
+
+- name: Enable site
+  file:
+    src:      /etc/nginx/sites-available/mysite
+    dest:     /etc/nginx/sites-enabled/mysite
+    state:    link
+
+- name: Remove default config
+  file:
+    path:     /etc/nginx/sites-enabled/default
+    state:    absent
+
+- name: Restart nginx
+  systemd:
+    name:     nginx
+    state:    restarted
+
+- name: Install certbot
+  apt:
+    name:
+      - certbot
+      - python3-certbot-nginx
+    state:     present
+
+- name: Obtain SSL certificate
+  command: >
+    certbot --nginx -d avrusanov.ru -d www.avrusanov.ru
+    --non-interactive --agree-tos -m avrtrump@gmail.com
