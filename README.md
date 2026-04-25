@@ -16,15 +16,25 @@ The system is designed to automatically deploy updates on every push to the main
 ## Architecture
 
 Local Machine
-      ↓ 
+
+      ↓
+ 
 GitHub (push)
+
       ↓ 
+
 GitHub Actions (CI/CD)
+
       ↓ 
+
 VPS (Docker container)
+
       ↓ 
+
 Nginx (reverse proxy)
+
       ↓ 
+
 User (via HTTP/HTTPS) 
 
 ---
