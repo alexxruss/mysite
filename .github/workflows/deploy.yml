@@ -1,0 +1,30 @@
+name: Deploy
+
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build
+        run: docker build -t mysite ./docker
+
+      - name: Save
+        run: docker save mysite > mysite.tar
+
+      - name: Copy
+        uses: appleboy/scp-action@v0.1.3
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            docker load < mysite.tar
+            docker stop mysite || true
+            docker rm mysite || true
+            docker run -d -p 127.0.0.1:8080:80 --name mysite mysite
