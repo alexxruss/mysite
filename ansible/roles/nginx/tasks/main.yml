@@ -40,5 +40,5 @@
 
 - name: Obtain SSL certificate
   command: >
-    certbot --nginx -d avrusanov.ru -d www.avrusanov.ru
-    --non-interactive --agree-tos -m avrtrump@gmail.com
+    certbot --nginx -d ${{ secrets.SERVER_NAME }} ${{ secrets.SERVER_NAME_WWW }}
+    --non-interactive --agree-tos -m ${{ secrets.SERVER_EMAIL }}
