@@ -16,15 +16,15 @@ The system is designed to automatically deploy updates on every push to the main
 ## Architecture
 
 Local Machine
-      ↓
+
 GitHub (push)
-      ↓ 
+
 GitHub Actions (CI/CD)
-      ↓ 
+
 VPS (Docker container)
-      ↓ 
+
 Nginx (reverse proxy)
-      ↓ 
+
 User (via HTTP/HTTPS) 
 
 ---
@@ -36,29 +36,6 @@ User (via HTTP/HTTPS)
 - Ansible
 - GitHub Actions
 - Linux (Ubuntu VPS)
-
----
-
-## Project Structure
-
-project/
-  ├── ansible/
-  │    ├── inventory.ini
-  │    ├── playbook.yml
-  │    └── roles/ 
-  │         ├── docker/
-  │         └── nginx/ 
-  ├── app/
-  │    └── index.html
-  ├── docker/
-  │    └── Dockerfile
-  ├── nginx/ 
-  │    └── mysite.conf
-  ├── .github/ 
-  │    └── workflows/ 
-  │         └── deploy.yml 
-  │ 
-  └── README.md 
 
 ---
 
