@@ -85,33 +85,6 @@ git push → GitHub Actions → build → transfer → deploy → live update
 
 ---
 
-## Nginx Configuration
-
-Nginx acts as a reverse proxy:
-
-server {
-     listen 80;     
-     server_name avrusanov.ru www.avrusanov.ru;
-     location / {
-         proxy_pass http://127.0.0.1:8080;    
-     }
-} 
-
----
-
-## Verification
-
-After deployment:
-
-curl http://127.0.0.1:8080 
-curl http://localhost 
-
-Or open in browser:
-
-http://avrusanov.ru
-
----
-
 ## Known Limitations
 
 - Uses .tar image transfer instead of Docker registry
