@@ -16,25 +16,15 @@ The system is designed to automatically deploy updates on every push to the main
 ## Architecture
 
 Local Machine
-
       ↓
- 
 GitHub (push)
-
       ↓ 
-
 GitHub Actions (CI/CD)
-
       ↓ 
-
 VPS (Docker container)
-
       ↓ 
-
 Nginx (reverse proxy)
-
       ↓ 
-
 User (via HTTP/HTTPS) 
 
 ---
@@ -125,7 +115,6 @@ Nginx acts as a reverse proxy:
 server {
      listen 80;     
      server_name avrusanov.ru www.avrusanov.ru;
-
      location / {
          proxy_pass http://127.0.0.1:8080;    
      }
