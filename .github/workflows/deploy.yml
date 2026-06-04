@@ -17,8 +17,8 @@ jobs:
       - name: Save
         run: docker save mysite > mysite.tar
 
-      - name: Copy
-        uses: appleboy/scp-action@v0.1.3
+      - name: Copy image to server
+        uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.SERVER_IP }}
           username: ${{ secrets.SERVER_USER }}
@@ -26,8 +26,8 @@ jobs:
           source: "mysite.tar"
           target: "/home/${{ secrets.SERVER_USER }}/"
 
-      - name: Deploy on server
-        uses: appleboy/ssh-action@v0.1.5
+      - name: Deploy container
+        uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SERVER_IP }}
           username: ${{ secrets.SERVER_USER }}
@@ -37,3 +37,23 @@ jobs:
             docker stop mysite || true
             docker rm mysite || true
             docker run -d -p 127.0.0.1:8080:80 --name mysite mysite
+
+      - name: Install Ansible
+        run: |
+          sudo apt update
+          sudo apt install -y ansible
+
+      - name: Setup SSH key for Ansible
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/mykey
+          chmod 600 ~/.ssh/mykey
+
+      - name: Run Ansible
+        run: |
+          cd ansible
+          ansible-playbook \
+            -i "${{ secrets.SERVER_IP }}," \
+            -u "${{ secrets.SERVER_USER }}" \
+            --private-key ~/.ssh/mykey \
+            playbook.yml
