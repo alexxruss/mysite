@@ -11,6 +11,30 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Install Ansible
+        run: |
+          sudo apt update
+          sudo apt install -y ansible
+
+      - name: Setup SSH key for Ansible
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/mykey
+          chmod 600 ~/.ssh/mykey
+
+      # Провижининг сервера (docker, nginx, certbot) должен пройти
+      # ДО первого запуска контейнера — иначе на новом сервере
+      # шаг "Deploy container" упадёт, т.к. docker ещё не установлен.
+      - name: Run Ansible
+        run: |
+          cd ansible
+          ansible-playbook \
+            -i "${{ secrets.SERVER_IP }}," \
+            -u "${{ secrets.SERVER_USER }}" \
+            --private-key ~/.ssh/mykey \
+            -e ansible_ssh_common_args='-o StrictHostKeyChecking=no' \
+            playbook.yml
+
       - name: Build
         run: docker build -t mysite -f docker/Dockerfile .
 
@@ -36,24 +60,6 @@ jobs:
             docker load < mysite.tar
             docker stop mysite || true
             docker rm mysite || true
-            docker run -d -p 127.0.0.1:8080:80 --name mysite mysite
-
-      - name: Install Ansible
-        run: |
-          sudo apt update
-          sudo apt install -y ansible
-
-      - name: Setup SSH key for Ansible
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/mykey
-          chmod 600 ~/.ssh/mykey
-
-      - name: Run Ansible
-        run: |
-          cd ansible
-          ansible-playbook \
-            -i "${{ secrets.SERVER_IP }}," \
-            -u "${{ secrets.SERVER_USER }}" \
-            --private-key ~/.ssh/mykey \
-            playbook.yml
+            docker run -d -p 127.0.0.1:8080:80 --restart unless-stopped --name mysite mysite
+            rm -f mysite.tar
+            docker image prune -f
