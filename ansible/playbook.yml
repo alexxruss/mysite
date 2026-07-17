@@ -1,4 +1,4 @@
-- hosts: vps
+- hosts: all
   become: true
   roles:
     - docker
