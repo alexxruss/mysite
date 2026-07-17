@@ -11,10 +11,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # apt-версия Ansible на ubuntu-latest несовместима с Python 3.12
+      # (падает с SystemExit/"A worker was found in a dead state"),
+      # поэтому ставим свежую версию через pipx.
       - name: Install Ansible
-        run: |
-          sudo apt update
-          sudo apt install -y ansible
+        run: pipx install --include-deps ansible
 
       - name: Setup SSH key for Ansible
         run: |
