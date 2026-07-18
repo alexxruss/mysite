@@ -11,11 +11,22 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # apt-версия Ansible на ubuntu-latest несовместима с Python 3.12
-      # (падает с SystemExit/"A worker was found in a dead state"),
-      # поэтому ставим свежую версию через pipx.
+      # На ubuntu-latest уже предустановлен Ansible, и он может перехватывать
+      # команду "ansible-playbook" через PATH раньше pipx/новой версии.
+      # Ставим Ansible в отдельный venv и вызываем его по полному пути,
+      # чтобы гарантированно использовать нужную версию.
+      #
+      # ВАЖНО: версия жёстко зафиксирована ниже 2.19 — в ansible-core 2.19
+      # есть подтверждённый баг в ssh-плагине (_is_tty_requested падает
+      # с "argparse.ArgumentError: argument -o: expected one argument"
+      # прямо на "Gathering Facts"), см. ansible/ansible#86298.
+      # Playbook использует только builtin-модули (apt, systemd, copy, file,
+      # command), поэтому полный пакет "ansible" не нужен — хватает ansible-core.
       - name: Install Ansible
-        run: pipx install --include-deps ansible
+        run: |
+          python3 -m venv /tmp/ansible-venv
+          /tmp/ansible-venv/bin/pip install --upgrade pip
+          /tmp/ansible-venv/bin/pip install "ansible-core<2.19"
 
       - name: Setup SSH key for Ansible
         run: |
@@ -29,7 +40,7 @@ jobs:
       - name: Run Ansible
         run: |
           cd ansible
-          ansible-playbook \
+          /tmp/ansible-venv/bin/ansible-playbook \
             -i "${{ secrets.SERVER_IP }}," \
             -u "${{ secrets.SERVER_USER }}" \
             --private-key ~/.ssh/mykey \
