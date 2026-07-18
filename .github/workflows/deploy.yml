@@ -33,18 +33,34 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/mykey
           chmod 600 ~/.ssh/mykey
+          # Отключаем проверку host key напрямую через SSH-конфиг,
+          # а не через флаги, которые собирает Ansible, — так мы
+          # больше не зависим от того, как именно ssh-плагин Ansible
+          # строит "-o" опции (там уже дважды находили баги).
+          cat >> ~/.ssh/config << 'EOF'
+          Host *
+            StrictHostKeyChecking no
+            UserKnownHostsFile /dev/null
+          EOF
+          chmod 600 ~/.ssh/config
 
       # Провижининг сервера (docker, nginx, certbot) должен пройти
       # ДО первого запуска контейнера — иначе на новом сервере
       # шаг "Deploy container" упадёт, т.к. docker ещё не установлен.
+      #
+      # Host key checking отключаем через переменную окружения
+      # ANSIBLE_HOST_KEY_CHECKING, а не через "-e ansible_ssh_common_args=-o ...":
+      # передача сырых "-o" флагов на построение ssh-командной строки
+      # регулярно ловит баги в разных версиях ssh-коннектора Ansible.
       - name: Run Ansible
+        env:
+          ANSIBLE_HOST_KEY_CHECKING: "False"
         run: |
           cd ansible
           /tmp/ansible-venv/bin/ansible-playbook \
             -i "${{ secrets.SERVER_IP }}," \
             -u "${{ secrets.SERVER_USER }}" \
             --private-key ~/.ssh/mykey \
-            -e ansible_ssh_common_args='-o StrictHostKeyChecking=no' \
             playbook.yml
 
       - name: Build
