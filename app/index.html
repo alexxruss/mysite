@@ -9,161 +9,206 @@
   <meta property="og:title" content="Александр Русанов — DevOps Engineer (Junior)">
   <meta property="og:description" content="Портфолио начинающего DevOps-инженера: Linux, Docker, Ansible, GitHub Actions, CI/CD, автоматизация инфраструктуры.">
   <meta property="og:type" content="website">
-  <meta name="twitter:card" content="summary">
 
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%230f172a%22/><text x=%2250%22 y=%2268%22 font-size=%2260%22 font-family=%22monospace%22 fill=%22%2338bdf8%22 text-anchor=%22middle%22>&gt;_</text></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%23111318%22/><circle cx=%2250%22 cy=%2250%22 r=%2224%22 fill=%22none%22 stroke=%22%233fb950%22 stroke-width=%228%22/></svg>">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
-    * {
-      box-sizing: border-box;
+    :root {
+      --bg: #111318;
+      --surface: #1a1d24;
+      --surface-2: #20242c;
+      --border: #262b33;
+      --text: #e5e7eb;
+      --muted: #7d8590;
+      --ok: #3fb950;
+      --warn: #d29922;
+      --info: #58a6ff;
+      --display: 'Space Mono', ui-monospace, monospace;
+      --sans: 'Manrope', -apple-system, sans-serif;
     }
+
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
-      font-family: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-      background: #0f172a;
-      color: #e2e8f0;
-      line-height: 1.5;
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
     }
 
-    .container {
-      max-width: 1000px;
-      margin: 0 auto;
-      padding: 20px;
+    a { color: var(--info); }
+    :focus-visible { outline: 2px solid var(--info); outline-offset: 2px; }
+
+    .container { max-width: 720px; margin: 0 auto; padding: 32px 20px 60px; }
+
+    /* ---------- Hero: workflow run card ---------- */
+
+    .run-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
     }
 
-    header.hero {
+    .run-head {
       display: flex;
       align-items: center;
-      gap: 20px;
-      padding: 24px 0 8px;
+      gap: 12px;
+      padding: 16px 18px;
+      border-bottom: 1px solid var(--border);
     }
 
-    .avatar {
-      flex-shrink: 0;
-      width: 72px;
-      height: 72px;
+    .run-check {
+      width: 30px; height: 30px;
       border-radius: 50%;
-      background: linear-gradient(135deg, #38bdf8, #6366f1);
-      color: #0f172a;
+      background: var(--ok);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      color: #0d1117;
+      font-weight: 700;
+    }
+
+    .run-title { font-family: var(--display); font-weight: 700; font-size: 1.15rem; }
+    .run-sub { font-size: 0.8rem; color: var(--muted); margin-top: 2px; }
+
+    .run-steps { padding: 6px 18px 16px; }
+
+    .step {
       display: flex;
       align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      font-size: 24px;
+      gap: 10px;
+      padding: 9px 0;
+      border-bottom: 1px solid var(--border);
+      font-family: var(--display);
+      font-size: 0.85rem;
+    }
+    .step:last-child { border-bottom: none; }
+    .step .ok { color: var(--ok); }
+    .step .label { flex: 1; color: var(--text); }
+    .step .time { color: var(--muted); font-size: 0.78rem; }
+
+    .run-footer {
+      background: var(--surface-2);
+      padding: 10px 18px;
+      font-family: var(--display);
+      font-size: 0.78rem;
+      color: var(--ok);
     }
 
-    h1 {
-      margin: 0;
-      font-size: 1.5rem;
-      color: #f8fafc;
+    /* ---------- Sections ---------- */
+
+    section { margin-top: 30px; }
+
+    .job-head {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
     }
 
-    h1 span {
-      display: block;
+    .job-dot {
+      width: 9px; height: 9px; border-radius: 50%;
+      background: var(--ok);
+    }
+
+    .job-head h2 {
+      font-family: var(--display);
       font-size: 0.95rem;
-      font-weight: normal;
-      color: #38bdf8;
-      margin-top: 4px;
-    }
-
-    h2 {
-      color: #38bdf8;
-      margin-top: 0;
+      font-weight: 700;
+      text-transform: lowercase;
+      letter-spacing: 0.01em;
+      color: var(--text);
+      margin: 0;
     }
 
     .card {
-      background: #1e293b;
-      padding: 20px;
-      border-radius: 12px;
-      margin-bottom: 20px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-      transition: box-shadow 0.2s ease, transform 0.2s ease;
-    }
-
-    .card:hover {
-      box-shadow: 0 6px 16px rgba(0,0,0,0.4);
-      transform: translateY(-2px);
-    }
-
-    ul {
-      padding-left: 20px;
-      margin: 0;
-    }
-
-    li + li {
-      margin-top: 12px;
-    }
-
-    li a {
-      color: #38bdf8;
-    }
-
-    .featured {
-      border: 1px solid #38bdf8;
-      list-style: none;
-      margin: 0 0 16px 0;
-      padding: 14px;
+      background: var(--surface);
+      border: 1px solid var(--border);
       border-radius: 10px;
-      background: #16213a;
+      padding: 18px 20px;
     }
 
-    .featured .tag {
-      display: inline-block;
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      background: #38bdf8;
-      color: #0f172a;
-      padding: 2px 8px;
-      border-radius: 999px;
-      margin-bottom: 8px;
-      font-weight: bold;
-    }
+    .card p { margin: 0; }
 
-    .skills {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 10px;
-    }
+    /* ---------- Contacts ---------- */
 
-    .skill {
-      background: #334155;
-      padding: 10px;
-      border-radius: 8px;
-      text-align: center;
-      transition: background 0.15s ease, transform 0.15s ease;
-    }
-
-    .skill:hover {
-      background: #475569;
-      transform: translateY(-2px);
-    }
-
-    .contacts {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
+    .contacts { display: flex; flex-wrap: wrap; gap: 10px; }
     .contacts a {
-      color: #38bdf8;
+      display: flex; align-items: center; gap: 6px;
       text-decoration: none;
-      padding: 8px 14px;
-      border: 1px solid #334155;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 7px 14px;
+      font-size: 0.85rem;
+      color: var(--text);
+    }
+    .contacts a:hover { border-color: var(--info); }
+    .contacts a::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--ok); }
+
+    /* ---------- Skills as matrix ---------- */
+
+    .matrix { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 8px; }
+    .matrix-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
       border-radius: 8px;
-      transition: background 0.15s ease, border-color 0.15s ease;
+      padding: 10px 12px;
+      display: flex; align-items: center; gap: 8px;
+      font-size: 0.85rem;
+      transition: border-color 0.15s ease;
+    }
+    .matrix-item:hover { border-color: var(--info); }
+    .matrix-item .badge-ok {
+      width: 6px; height: 6px; border-radius: 50%; background: var(--ok); flex-shrink: 0;
     }
 
-    .contacts a:hover {
-      background: #334155;
-      border-color: #38bdf8;
+    /* ---------- Projects as jobs ---------- */
+
+    .job {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 18px;
+      margin-bottom: 12px;
     }
+    .job.featured { border-color: var(--ok); }
+    .job-title-row { display: flex; align-items: center; gap: 8px; }
+    .job-title-row .name { font-weight: 700; }
+    .job-status {
+      margin-left: auto;
+      font-family: var(--display);
+      font-size: 0.7rem;
+      color: var(--ok);
+      border: 1px solid var(--ok);
+      border-radius: 999px;
+      padding: 1px 8px;
+    }
+    .job .desc { margin: 8px 0 0; color: var(--muted); font-size: 0.9rem; }
+    .job a { font-family: var(--display); font-size: 0.8rem; }
+
+    /* ---------- Roadmap as pending jobs ---------- */
+
+    .pending { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border); }
+    .pending:last-child { border-bottom: none; }
+    .pending .ring {
+      width: 14px; height: 14px; border-radius: 50%;
+      border: 2px solid var(--warn);
+      flex-shrink: 0;
+    }
+    .pending .label { font-size: 0.9rem; }
 
     footer {
+      margin-top: 44px;
+      font-family: var(--display);
+      font-size: 0.78rem;
+      color: var(--muted);
       text-align: center;
-      margin-top: 40px;
-      opacity: 0.6;
     }
   </style>
 </head>
@@ -171,79 +216,85 @@
 
   <div class="container">
 
-    <header class="hero">
-      <div class="avatar">АР</div>
-      <h1>
-        Александр Русанов
-        <span>DevOps Engineer (Junior)</span>
-      </h1>
-    </header>
-
-    <div class="card">
-      <h2>Обо мне</h2>
-      <p>
-        Начинающий DevOps-инженер. Основной фокус — Linux, автоматизация и работа с инфраструктурой.
-        Предпочитаю практический подход: пишу скрипты, настраиваю окружение, разбираюсь в реальных задачах.
-      </p>
+    <div class="run-card">
+      <div class="run-head">
+        <div class="run-check">✓</div>
+        <div>
+          <div class="run-title">Александр Русанов</div>
+          <div class="run-sub">DevOps Engineer · Junior · все проверки пройдены</div>
+        </div>
+      </div>
+      <div class="run-steps">
+        <div class="step"><span class="ok">✓</span><span class="label">Linux &amp; Bash</span><span class="time">освоено</span></div>
+        <div class="step"><span class="ok">✓</span><span class="label">Docker &amp; Ansible</span><span class="time">освоено</span></div>
+        <div class="step"><span class="ok">✓</span><span class="label">CI/CD (GitHub Actions)</span><span class="time">освоено</span></div>
+      </div>
+      <div class="run-footer">✓ Build passed — открыт к предложениям</div>
     </div>
 
-    <div class="card">
-      <h2>Контакты</h2>
+    <section>
+      <div class="job-head"><span class="job-dot"></span><h2>about</h2></div>
+      <div class="card">
+        <p>
+          Начинающий DevOps-инженер. Основной фокус — Linux, автоматизация и работа с инфраструктурой.
+          Предпочитаю практический подход: пишу скрипты, настраиваю окружение, разбираюсь в реальных задачах.
+        </p>
+      </div>
+    </section>
+
+    <section>
+      <div class="job-head"><span class="job-dot"></span><h2>contacts</h2></div>
       <div class="contacts">
-        <a href="https://t.me/a_v_rusanov" target="_blank">Telegram: @a_v_rusanov</a>
-        <a href="mailto:avrtrump@gmail.com">Email: avrtrump@gmail.com</a>
-        <a href="https://github.com/alexxruss" target="_blank">github.com/alexxruss</a>
+        <a href="https://t.me/a_v_rusanov" target="_blank">Telegram</a>
+        <a href="mailto:avrtrump@gmail.com">Email</a>
+        <a href="https://github.com/alexxruss" target="_blank">GitHub</a>
       </div>
-    </div>
+    </section>
 
-    <div class="card">
-      <h2>Навыки</h2>
-      <div class="skills">
-        <div class="skill">Linux</div>
-        <div class="skill">Bash</div>
-        <div class="skill">Git</div>
-        <div class="skill">GitHub</div>
-        <div class="skill">GitHub Actions</div>
-        <div class="skill">Docker</div>
-        <div class="skill">Ansible</div>
-        <div class="skill">Nginx</div>
+    <section>
+      <div class="job-head"><span class="job-dot"></span><h2>skills</h2></div>
+      <div class="matrix">
+        <div class="matrix-item"><span class="badge-ok"></span>Linux</div>
+        <div class="matrix-item"><span class="badge-ok"></span>Bash</div>
+        <div class="matrix-item"><span class="badge-ok"></span>Git</div>
+        <div class="matrix-item"><span class="badge-ok"></span>GitHub</div>
+        <div class="matrix-item"><span class="badge-ok"></span>GitHub Actions</div>
+        <div class="matrix-item"><span class="badge-ok"></span>Docker</div>
+        <div class="matrix-item"><span class="badge-ok"></span>Ansible</div>
+        <div class="matrix-item"><span class="badge-ok"></span>Nginx</div>
       </div>
-    </div>
+    </section>
 
-    <div class="card">
-      <h2>Проекты</h2>
-      <ul>
-        <li class="featured">
-          <span class="tag">Основной проект</span><br>
-          <b>Автоматический CI/CD-деплой веб-приложения</b><br>
-          Полный цикл: Docker-контейнеризация приложения, provisioning VPS через Ansible
-          (Docker, Nginx, Let's Encrypt SSL), автоматический деплой на push в main через
-          GitHub Actions — сборка образа, передача на сервер, перезапуск контейнера без
-          участия человека.<br>
-          <a href="https://github.com/alexxruss" target="_blank">Смотреть на GitHub →</a>
-        </li>
-        <li>
-          <b>Автоматизация серверов (Ansible)</b><br>
-          Настройка пользователей, SSH, базовых сервисов через playbook
-        </li>
-        <li>
-          <b>Bash-скрипты</b><br>
-          Анализ логов, поиск ошибок, автоматизация рутинных задач
-        </li>
-        <li>
-          <b>Docker</b><br>
-          Запуск контейнеров, работа с образами, базовая настройка
-        </li>
-      </ul>
-    </div>
+    <section>
+      <div class="job-head"><span class="job-dot"></span><h2>projects</h2></div>
 
-    <div class="card">
-      <h2>Текущие цели</h2>
-      <ul>
-        <li>Kubernetes (развертывание и базовое администрирование)</li>
-        <li>Terraform (Infrastructure as Code)</li>
-      </ul>
-    </div>
+      <div class="job featured">
+        <div class="job-title-row"><span class="name">CI/CD-деплой веб-приложения</span><span class="job-status">passed</span></div>
+        <p class="desc">
+          Docker-контейнеризация, provisioning VPS через Ansible (Docker, Nginx, Let's Encrypt SSL),
+          автодеплой на push в main через GitHub Actions.
+        </p>
+        <a href="https://github.com/alexxruss" target="_blank">→ смотреть на GitHub</a>
+      </div>
+
+      <div class="job">
+        <div class="job-title-row"><span class="name">Ansible-провижининг серверов</span><span class="job-status">passed</span></div>
+        <p class="desc">Настройка пользователей, SSH, базовых сервисов через playbook</p>
+      </div>
+
+      <div class="job">
+        <div class="job-title-row"><span class="name">Bash-скрипты</span><span class="job-status">passed</span></div>
+        <p class="desc">Анализ логов, поиск ошибок, автоматизация рутинных задач</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="job-head"><span class="job-dot" style="background:var(--warn)"></span><h2>roadmap — pending</h2></div>
+      <div class="card">
+        <div class="pending"><span class="ring"></span><span class="label">Kubernetes — развёртывание и базовое администрирование</span></div>
+        <div class="pending"><span class="ring"></span><span class="label">Terraform — Infrastructure as Code</span></div>
+      </div>
+    </section>
 
     <footer>
       <p>© 2026 avrusanov</p>
@@ -253,4 +304,3 @@
 
 </body>
 </html>
-
